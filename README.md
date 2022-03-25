@@ -3,6 +3,8 @@
 
 ## Day 2
 
+## VPR starting froma a blif file
+
 ### blif format (previously generated, for instance for ABC tool):
 .model = model description  
 .inputs  
@@ -121,5 +123,35 @@ and append it to the execution of the VTR command:
 
 Ater completion, the report now shows the slack time is met:  
 ![VPR tseng slack_met](/images/day2/13_VPR_slack_met.JPG)
+
+
+## VTR Flow
+
+At this point we can start from an HDL design through all the steps.  
+
+2 options to run the tool:
+1. Manually using 
+- ODIN II for Synthesis
+- ABC for mapping
+- VPR for implementation 
+2. Automatic running the VTR flow
+
+Running the counter example:
+    $VTR_ROOT/vtr_flow/scripts/run_vtr_flow.py counter.v $VTR_ROOT/vtr_flow/arch/timing/EArch.xml --route_chan_width 100
+
+We can see the generated blif files  
+![14_VTR_blif_files](/images/day2/14_VTR_blif_files.JPG)
+
+and use the VPR specific analysis to take the pre-vpr.blif file and see the GUI until that point:
+    $VTR_ROOT/vpr/vpr $VTR_ROOT/vtr_flow/arch/timing/EArch.xml counter --circuit_file temp/counter.pre-vpr.blif  --route_chan_width 100 --analysis --disp on
+
+![15_VTR_blif_gui](/images/day2/15_VTR_blif_gui.JPG)
+
+We can generate the post synthesis netlist:
+
+    $VTR_ROOT/vpr/vpr $VTR_ROOT/vtr_flow/arch/timing/EArch.xml counter --circuit_file temp/counter.pre-vpr.blif --gen_post_synthesis_netlist on
+    
+![16_up_counter_post_synth](/images/day2/16_up_counter_post_synth.JPG)
+
 
 
