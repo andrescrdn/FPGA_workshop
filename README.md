@@ -1,5 +1,11 @@
 # FPGA_workshop
 ## Day 1
+## FPGA Intro and Vivado 
+
+### Vivado counter
+
+
+
 
 ## Day 2
 
@@ -119,7 +125,7 @@ We create the tseng.sdc constraints file:
 
 and append it to the execution of the VTR command:
 
-    $VTR_ROOT/vpr/vpr $VTR_ROOT/vtr_flow/arch/timing/EArch.xml $VTR_ROOT/vtr_flow/benchmarks/blif/tseng.blif --route_chan_width 100 --sdc_file 
+    $VTR_ROOT/vpr/vpr $VTR_ROOT/vtr_flow/arch/timing/EArch.xml $VTR_ROOT/vtr_flow/benchmarks/blif/tseng.blif --route_chan_width 100 --sdc_file tseng.sdc
 
 Ater completion, the report now shows the slack time is met:  
 ![VPR tseng slack_met](/images/day2/13_VPR_slack_met.JPG)
