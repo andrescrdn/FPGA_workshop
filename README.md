@@ -56,7 +56,7 @@ Description how it is modeled
       </complexblocklist>
     </architecture>
         
-VTR Commands:
+### VTR Commands:
 
     mkdir vpr_tseng
     cd vpr_tseng
@@ -78,6 +78,48 @@ We can also see the critical paths:
 
 ![VPR tseng GUI Critical path](/images/day2/04_VPR_GUI_critical_path.JPG)
 
+When done, the console shows the log of the process:
+![VPR tseng console](/images/day2/05_VPR_console_done.JPG)
 
+
+We can specify a point util the tool executes. For instance analysis will proceed until analysis:
+
+  $VTR_ROOT/vpr/vpr $VTR_ROOT/vtr_flow/arch/timing/EArch.xml $VTR_ROOT/vtr_flow/benchmarks/blif/tseng.blif --route_chan_width 100 --analysis --disp on
+
+![VPR tseng GUI analysis](/images/day2/06_VPR_analysis.JPG)
+
+### Outputs  
+
+The .net generated file is an xml with the description of the post-packed circuit. User netlist in terms of complex logic.
+![VPR tseng net](/images/day2/07_VPR_tseng_net_out.JPG)
+
+The .place generated file is the output of the placement.
+![VPR tseng place](/images/day2/08_VPR_tseng_place_out.JPG)
+
+The .route generated file is the output of the routing stage.
+![VPR tseng route](/images/day2/09_VPR_tseng_route_out.JPG)
+
+And the log file contains the terminal output.
+
+
+### Reports
+
+Different reports are generated with the information about timing, pins.
+![VPR tseng reports](/images/day2/10_VPR_reports.JPG)
+
+By checking the report_timing_setup and hold we can see that the slack is negative (violated) as no clock constraints were created:  
+![VPR tseng reports](/images/day2/11_VPR_report_timing_slack_violated.JPG)
+
+
+To solve the negative slack issues we need to add the required constraints.  
+We create the tseng.sdc constraints file:
+![VPR tseng sdc](/images/day2/12_VPR_sdc_constraints.JPG)
+
+and append it to the execution of the VTR command:
+
+    $VTR_ROOT/vpr/vpr $VTR_ROOT/vtr_flow/arch/timing/EArch.xml $VTR_ROOT/vtr_flow/benchmarks/blif/tseng.blif --route_chan_width 100 --sdc_file 
+
+Ater completion, the report now shows the slack time is met:  
+![VPR tseng slack_met](/images/day2/13_VPR_slack_met.JPG)
 
 
