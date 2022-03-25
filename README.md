@@ -66,4 +66,18 @@ the --disp on option opens the GUI:
 
 ![VPR tseng GUI](/images/day2/01_VPR_GUI.JPG)
 
+From the GUI different options are available to see nets, Proceed with the P&R, etc:
+
+![VPR tseng GUI 2](/images/day2/02_VPR_GUI.JPG)
+
+We can see the Congestion where Blue means less congested area.
+
+![VPR tseng GUI Congestion](/images/day2/03_VPR_GUI_Congestion.JPG)
+
+We can also see the critical paths:
+
+![VPR tseng GUI Critical path](/images/day2/04_VPR_GUI_critical_path.JPG)
+
+
+
 
