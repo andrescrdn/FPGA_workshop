@@ -61,6 +61,9 @@ VTR Commands:
     mkdir vpr_tseng
     cd vpr_tseng
     $VTR_ROOT/vpr/vpr $VTR_ROOT/vtr_flow/arch/timing/EArch.xml $VTR_ROOT/vtr_flow/benchmarks/blif/tseng.blif --route_chan_width 100 --disp on
-    
-    
+
+the --disp on option opens the GUI:  
+
+![VPR tseng GUI](/images/day2/01_VPR_GUI.JPG)
+
 
