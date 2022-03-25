@@ -86,7 +86,7 @@ When done, the console shows the log of the process:
 
 We can specify a point util the tool executes. For instance analysis will proceed until analysis:
 
-  $VTR_ROOT/vpr/vpr $VTR_ROOT/vtr_flow/arch/timing/EArch.xml $VTR_ROOT/vtr_flow/benchmarks/blif/tseng.blif --route_chan_width 100 --analysis --disp on
+    $VTR_ROOT/vpr/vpr $VTR_ROOT/vtr_flow/arch/timing/EArch.xml $VTR_ROOT/vtr_flow/benchmarks/blif/tseng.blif --route_chan_width 100 --analysis --disp on
 
 ![VPR tseng GUI analysis](/images/day2/06_VPR_analysis.JPG)
 
@@ -136,13 +136,15 @@ At this point we can start from an HDL design through all the steps.
 - VPR for implementation 
 2. Automatic running the VTR flow
 
-Running the counter example:
+Running the counter example:  
+
     $VTR_ROOT/vtr_flow/scripts/run_vtr_flow.py counter.v $VTR_ROOT/vtr_flow/arch/timing/EArch.xml --route_chan_width 100
 
 We can see the generated blif files  
 ![14_VTR_blif_files](/images/day2/14_VTR_blif_files.JPG)
 
-and use the VPR specific analysis to take the pre-vpr.blif file and see the GUI until that point:
+and use the VPR specific analysis to take the pre-vpr.blif file and see the GUI until that point:  
+
     $VTR_ROOT/vpr/vpr $VTR_ROOT/vtr_flow/arch/timing/EArch.xml counter --circuit_file temp/counter.pre-vpr.blif  --route_chan_width 100 --analysis --disp on
 
 ![15_VTR_blif_gui](/images/day2/15_VTR_blif_gui.JPG)
@@ -153,5 +155,7 @@ We can generate the post synthesis netlist:
     
 ![16_up_counter_post_synth](/images/day2/16_up_counter_post_synth.JPG)
 
+With this post synthesis file a Vivado project including: up_counter_post_synthesis.v, primitives.v and counter_tb.v is created and the simulation of the circuit can be done:
 
+![17_up_counter_vivado_sim](/images/day2/17_up_counter_vivado_sim.JPG)
 
