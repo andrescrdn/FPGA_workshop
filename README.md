@@ -106,7 +106,7 @@ And the log file contains the terminal output.
 
 ### Reports
 
-Different reports are generated with the information about timing, pins.
+Different reports are generated with the information about timing, pins.  
 ![VPR tseng reports](/images/day2/10_VPR_reports.JPG)
 
 By checking the report_timing_setup and hold we can see that the slack is negative (violated) as no clock constraints were created:  
@@ -114,7 +114,7 @@ By checking the report_timing_setup and hold we can see that the slack is negati
 
 
 To solve the negative slack issues we need to add the required constraints.  
-We create the tseng.sdc constraints file:
+We create the tseng.sdc constraints file: 
 ![VPR tseng sdc](/images/day2/12_VPR_sdc_constraints.JPG)
 
 and append it to the execution of the VTR command:
@@ -155,7 +155,6 @@ We can generate the post synthesis netlist:
     
 ![16_up_counter_post_synth](/images/day2/16_up_counter_post_synth.JPG)
 
-With this post synthesis file a Vivado project including: up_counter_post_synthesis.v, primitives.v and counter_tb.v is created and the simulation of the circuit can be done:
-
+With this post synthesis file a Vivado project including: up_counter_post_synthesis.v, primitives.v and counter_tb.v is created and the simulation of the circuit can be done:  
 ![17_up_counter_vivado_sim](/images/day2/17_up_counter_vivado_sim.JPG)
 
