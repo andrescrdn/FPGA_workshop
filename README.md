@@ -218,12 +218,12 @@ Power Breakdown:
 
 Taking the reference files for the RISCV processor a Vivado project is created and the Behabioral Simulation is completed. A small change was required in the test to addapt the out port connection in the testbench:
 
-![01_riscv_adapting_test_simulation](/images/day2/01_riscv_adapting_test_simulation.JPG)
+![01_riscv_adapting_test_simulation](/images/day3/01_riscv_adapting_test_simulation.JPG)
 
 
 The simulation confirms the implemented circuit (sum of 1 to 9 = 45):
 
-![02_riscv_vivado_simulation](/images/day2/02_riscv_vivado_simulation.JPG)
+![02_riscv_vivado_simulation](/images/day3/02_riscv_vivado_simulation.JPG)
 
 
 ### Adding an ILA
@@ -232,31 +232,31 @@ We remove the output out from the ports and declare it as a reg to be connected 
 
 Add the ILA from the IP catalog and define the sizes of the two probes:
 
-![03_riscv_vivado_ila](/images/day2/03_riscv_vivado_ila.JPG)
+![03_riscv_vivado_ila](/images/day3/03_riscv_vivado_ila.JPG)
 
 
 Instantiate the ILA in the code:
 
-![04_riscv_vivado_ila_instantiation](/images/day2/04_riscv_vivado_ila_instantiation.JPG)
+![04_riscv_vivado_ila_instantiation](/images/day3/04_riscv_vivado_ila_instantiation.JPG)
 
 
 After elaboration we assign the clock and reset pins:
 
-![05_riscv_vivado_IOs](/images/day2/05_riscv_vivado_IOs.JPG)
+![05_riscv_vivado_IOs](/images/day3/05_riscv_vivado_IOs.JPG)
 
 
 And after synthesis, the constraints wizard is used to define the timing constraints:
 
-![06_riscv_vivado_timing_constrs](/images/day2/06_riscv_vivado_timing_constrs.JPG)
+![06_riscv_vivado_timing_constrs](/images/day3/06_riscv_vivado_timing_constrs.JPG)
 
 
 Finally the implementation and bitstream generation is done. 
 
-![07_riscv_vivado_implemented](/images/day2/07_riscv_vivado_implemented.JPG)
+![07_riscv_vivado_implemented](/images/day3/07_riscv_vivado_implemented.JPG)
 
 We can verify that the timing was met:
 
-![08_riscv_vivado_timing](/images/day2/08_riscv_vivado_timing.JPG)
+![08_riscv_vivado_timing](/images/day3/08_riscv_vivado_timing.JPG)
 
 If we had the FPGA boar we could see the signals added to the ILA responding to the inputs.
 
