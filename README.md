@@ -208,6 +208,9 @@ It generates the file counter.power with the power estimation details:
 
 ![23_power](/images/day2/23_power.JPG)
 
+Power Breakdown:
+
+![24_power_breakdown](/images/day2/24_power_breakdown.JPG)
 
 
 
