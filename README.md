@@ -164,3 +164,22 @@ We can generate the post synthesis netlist:
 With this post synthesis file a Vivado project including: up_counter_post_synthesis.v, primitives.v and counter_tb.v is created and the simulation of the circuit can be done:  
 ![17_up_counter_vivado_sim](/images/day2/17_up_counter_vivado_sim.JPG)
 
+
+### Timing Area VTR flow
+We run the python script 
+    $VTR_ROOT/vtr_flow/scripts/run_vtr_flow.py\
+    counter.v $VTR_ROOT/vtr_flow/arch/timing/EArch.xml\
+    -temp_dir temp/ \
+    --route_chan_width 100
+    
+and checking again the timing reports,  setup for instance, we see the slack violation as no constriants were defined.
+
+We create the sdc constriants file:  
+![18_sdc_file](/images/day2/18_sdc_file.JPG)
+
+and run vtr using the generated blif file and the sdc constraint file:
+    $VTR_ROOT/vpr/vpr $VTR_ROOT/vtr_flow/arch/timing/EArch.xml temp/counter.pre-vpr.blif --route_chan_width 100 --sdc_file counter.sdc
+
+It fails as the character ^ in up_counter^clk is not recognized. So we need to replace the ^ by _ in both the blif and sdc files:
+
+
