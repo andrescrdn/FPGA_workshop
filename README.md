@@ -181,5 +181,36 @@ and run vtr using the generated blif file and the sdc constraint file:
     $VTR_ROOT/vpr/vpr $VTR_ROOT/vtr_flow/arch/timing/EArch.xml temp/counter.pre-vpr.blif --route_chan_width 100 --sdc_file counter.sdc
 
 It fails as the character ^ in up_counter^clk is not recognized. So we need to replace the ^ by _ in both the blif and sdc files:
+![19_replacing_clock_name](/images/day2/19_replacing_clock_name.JPG)
+
+After executing again the vpr command, now it completes without errors:
+![20_VPR_ok_after_replacing_clock_name](/images/day2/20_VPR_ok_after_replacing_clock_name.JPG)
+
+and the timing reports show that slack is met now.
+![21_timing_slack_met](/images/day2/21_timing_slack_met.JPG)
+
+In addition we can see from the vpr_stdout.log file useful information such as the area or resources required for this specific implementation:
+
+![22_resources](/images/day2/22_resources.JPG)
+
+
+### Power Analysis
+
+VTR power stimation can be done using the python script with the option -power and also the option -cmos_tech <cmos_tech_property_file>
+
+The CMOS technology property file is an XML containing information about transistor, lengths, leakage currents, etc. And this information is used to estimate the power consumption of the circuit.
+
+The command to perform the power stimation analysis is:
+
+    $VTR_ROOT/vtr_flow/scripts/run_vtr_flow.py counter.v $VTR_ROOT/vtr_flow/arch/timing/EArch.xml -power -cmos_tech $VTR_ROOT/vtr_flow/tech/PTM_45nm/45nm.xml -temp_dir temp/ --route_chan_width 100
+    
+It generates the file counter.power with the power estimation details:
+
+![23_power](/images/day2/23_power.JPG)
+
+
+
+
+
 
 
