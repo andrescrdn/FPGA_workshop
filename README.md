@@ -3,7 +3,7 @@
 
 ### Vivado counter
 
-The fists exercise consists of creating a Vivado project using a counter coded in verilog.
+The firts exercise consists of creating a Vivado project using a counter coded in verilog.
 
 The steps followed are detailed here:
 
@@ -68,7 +68,7 @@ The steps followed are detailed here:
 
 ## Day 2: OpenFPGA - VPR - VTR
 
-## VPR starting froma a blif file
+## VPR starting from a blif file
 
 ### blif format (previously generated, for instance for ABC tool):
 .model = model description  
@@ -273,7 +273,7 @@ Power Breakdown:
 
 
 
-## Day 3: Risk-V on Vivado
+## Day 3: RISC-V on Vivado
 
 Taking the reference files for the RISCV processor a Vivado project is created and the Behabioral Simulation is completed. A small change was required in the test to addapt the out port connection in the testbench:
 
@@ -332,11 +332,16 @@ Open-source embedeed FPGA IP library. Architecture description to produce ready 
 
 ### Steps to run SOFA using the counter.v example:
 
-Clone the repository: https://github.com/lnis-uofu/SOFA.git 
-It can be run using the Makefile with some config files that need to be specified for a given circuit.  
+Clone the repository: https://github.com/lnis-uofu/SOFA.git  
+
+It can be run using the Makefile with some config files that need to be specified for a given circuit. 
+
 First we need to adapt the file: SOFA/FPGA1212_QLSOFA_HD_PNR/FPGA1212_QLSOFA_HD_task/config/task_simulation.conf  
+
 This uses the yosys_vpr flow, the generate_testbench.openfpga shell scripts to run and the vpr_arch.xml file. It also uses the 12x12 device layout and a route_chan_width of 60.  
+
 The place were we can include our design file is under [BENCHMARKS] 
+
 We copy the files under the new folder counter_new and specify the counter.v file  
 and under [SYNTHESIS_PARAM] we specify the top level entity: up_counter  
 
