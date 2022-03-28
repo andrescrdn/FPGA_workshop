@@ -1,13 +1,12 @@
 # FPGA_workshop
-## Day 1
-## FPGA Intro and Vivado 
+## Day 1: FPGA Intro and Vivado 
 
 ### Vivado counter
 
 
 
 
-## Day 2
+## Day 2: OpenFPGA - VPR - VTR
 
 ## VPR starting froma a blif file
 
@@ -258,7 +257,111 @@ We can verify that the timing was met:
 
 ![08_riscv_vivado_timing](/images/day3/08_riscv_vivado_timing.JPG)
 
-If we had the FPGA boar we could see the signals added to the ILA responding to the inputs.
+If we had the FPGA board connected we could see the signals added to the ILA responding to the corresponding inputs.
+
+## Day 4: Intro to SOFA FPGA
+Skywater Opensource FPGAs. Base repository link:  
+https://github.com/lnis-uofu/SOFA
+
+Open source FPGA IPs which use Skywater 130 nm PDK and OpenFPGA framework.
+
+SOFA documentation link:  
+https://skywater-openfpga.readthedocs.io/en/latest/
+
+Open-source embedeed FPGA IP library. Architecture description to produce ready layouts.
+
+### Steps to run SOFA using the counter.v example:
+
+Clone the repository: https://github.com/lnis-uofu/SOFA.git 
+It can be run using the Makefile with some config files that need to be specified for a given circuit.  
+First we need to adapt the file: SOFA/FPGA1212_QLSOFA_HD_PNR/FPGA1212_QLSOFA_HD_task/config/task_simulation.conf  
+This uses the yosys_vpr flow, the generate_testbench.openfpga shell scripts to run and the vpr_arch.xml file. It also uses the 12x12 device layout and a route_chan_width of 60.  
+The place were we can include our design file is under [BENCHMARKS] 
+We copy the files under the new folder counter_new and specify the counter.v file  
+and under [SYNTHESIS_PARAM] we specify the top level entity: up_counter  
+
+![01_task_simulation_conf](/images/day4/01_task_simulation_conf.JPG)
+
+
+On the folder SOFA/FPGA1212_QLSOFA_HD_PNR/FPGA1212_QLSOFA_HD_task/ we find the file: generate_testbench.openfpga. This is a shell script that calls the VPR tool.  
+
+The architecture file is under SOFA/FPGA1212_QLSOFA_HD_PNR/FPGA1212_QLSOFA_HD_task/arch folder. It is vpr_arch.xml. It containt LUTs, carry, adder, FF, etc.
+
+To run it we need to go to the original folder: SOFA/FPGA1212_QLSOFA_HD_PNR and run the Makefile by executing the command:
+    make runOpenFPGA  
+    
+![02_make_runOpenFPGA](/images/day4/02_make_runOpenFPGA.JPG)
+
+Once completed, the results can be found in the task directory: ~/SOFA/FPGA1212_QLSOFA_HD_PNR/FPGA1212_QLSOFA_HD_task/latest/vpr_arch/up_counter/MIN_ROUTE_CHAN_WIDTH
+
+Here we see different blif files, reports, logs. 
+![03_output_files](/images/day4/03_output_files.JPG)
+
+
+The logs of interest are:
+
+openfpgashell.log and vpr_stdout.log
+
+In the vpr_stdout.log we can see the command used:  
+![04_vpr_command](/images/day4/04_vpr_command.JPG)
+
+And the Circuit statistics and Logic Elements with the information of resources used:  
+
+![05_vpr_circuit_statistics](/images/day4/05_vpr_circuit_statistics.JPG)
+
+![06_vpr_logic_elements](/images/day4/06_vpr_logic_elements.JPG)
+
+
+#### Timing Analysis
+
+Create an sdc file with the clock and delay information:  
+
+![07_sdc_file](/images/day4/07_sdc_file.JPG)
+
+And this sdc file needs to be included in the generate_testbench.openfpga file:  
+
+![08_sdc_file_path](/images/day4/08_sdc_file_path.JPG)
+
+
+With these changes we go back to the folder containing the Makefile and run again the command:  
+    make runOpenFPGA  
+
+And in the folder ~/SOFA/FPGA1212_QLSOFA_HD_PNR/FPGA1212_QLSOFA_HD_task/latest/vpr_arch/up_counter/MIN_ROUTE_CHAN_WIDTH we can see the timing reports were the slack is met:  
+
+![09_timing_reports](/images/day4/09_timing_reports.JPG)
+
+#### Post implementation netlist
+
+In the generate_testbench.openfpga file were we added the sdc file we include the option: --gen_post_synthesis_netlist on:  
+
+![10_gen_post_implem](/images/day4/10_gen_post_implem.JPG)
+
+Even though the option is called post_synthesis_netlist, it will generate a post implementation netlist.
+
+Run again the make.  
+
+It will generate the post synthesis file:  
+
+![11_post_synth_v](/images/day4/11_post_synth_v.JPG)
+
+With this file and a testbench we can create a Vivado project and run the simulation:  
+
+![12_vivado_simulation](/images/day4/12_vivado_simulation.JPG)
+
+#### Power analysis
+
+In the SOFA/FPGA1212_QLSOFA_HD_PNR/FPGA1212_QLSOFA_HD_task/config/task_simulation.conf we define the 
+    vpr_device_layout=auto
+    vpr_route_chan_width=150
+    
+And in the generate_testbench.openfpga file we need to add:  
+    --power --activity_file ~/SOFA/FPGA1212_QLSOFA_HD_PNR/FPGA1212_QLSOFA_HD_task/latest/vpr_arch/up_counter/MIN_ROUTE_CHAN_WIDTH/up_counter_ace_out.act  
+    --tech_properties $VTR_ROOT/vtr_flow/tech/PTM_45nm/45nm.xml
+    
+![13_power_options_vtr](/images/day4/13_power_options_vtr.JPG)
+
+
+
 
 
 
